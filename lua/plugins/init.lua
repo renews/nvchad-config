@@ -55,6 +55,8 @@ return {
 	{
 		-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
 		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			ensure_installed = {
 				-- defaults
@@ -93,6 +95,9 @@ return {
 				"terraform",
 				"zig",
 			},
+			auto_install = true,
+			highlight = { enable = true },
+			indent = { enable = true },
 		},
 	},
 }
