@@ -1,9 +1,97 @@
 return {
+	{ "github/copilot.vim" },
+	{ "dmmulroy/ts-error-translator.nvim" },
+	{ "letieu/hacker.nvim" },
+	{ "folke/flash.nvim", opts = {} },
+	{ "nvim-pack/nvim-spectre", opts = {} },
+	{ "akinsho/git-conflict.nvim", version = "*", config = true },
+	{
+		"stevearc/oil.nvim",
+		opts = {},
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	{
+		"folke/zen-mode.nvim",
+		opts = {},
+	},
+	{ "ggandor/leap.nvim", opts = {} },
+	{
+		"zeioth/garbage-day.nvim",
+		dependencies = "neovim/nvim-lspconfig",
+		event = "VeryLazy",
+		opts = {},
+	},
+	{
+		"karb94/neoscroll.nvim",
+		config = function()
+			require("neoscroll").setup({})
+		end,
+	},
+	{
+		"pwntester/octo.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {},
+	},
+	-- {
+	-- 	"m4xshen/hardtime.nvim",
+	-- 	dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+	-- 	opts = {
+	-- 		disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil" },
+	-- 	},
+	-- },
+	{ "lukas-reineke/headlines.nvim", dependencies = "nvim-treesitter/nvim-treesitter", opts = {} },
+	{
+		"ms-jpq/coq_nvim",
+		branch = "coq",
+		build = ":COQdeps",
+		-- config = function()
+		-- 	require("coq").setup({})
+		-- end,
+	},
+	{ "ms-jpq/coq.artifacts", branch = "artifacts" },
+	{ "folke/trouble.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {} },
 	{
 		"rmagatti/auto-session",
 		config = function()
 			require("configs.autosession")
 		end,
+	},
+	{ "folke/neodev.nvim", opts = {} },
+	{
+		"kdheepak/lazygit.nvim",
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "canary",
+		dependencies = {
+			{ "github/copilot.vim" },
+			{ "nvim-lua/plenary.nvim" },
+		},
+		opts = {},
 	},
 	{
 		-- https://github.com/stevearc/conform.nvim
@@ -12,7 +100,6 @@ return {
 			require("configs.conform")
 		end,
 	},
-
 	{
 		"nvim-tree/nvim-tree.lua",
 		opts = {
@@ -96,8 +183,28 @@ return {
 				"zig",
 			},
 			auto_install = true,
-			highlight = { enable = true },
+			highlight = { enable = true, use_languagetree = true },
 			indent = { enable = true },
 		},
 	},
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		cmd = "Telescope",
+		event = "VeryLazy",
+		opts = {
+			file_ignore_patterns = { "^./.git/", "^node_modules/", "^vendor/", "^_build/", "^dist/", "^deps/" },
+		},
+	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
+		event = "VeryLazy",
+		cmd = { "TodoQuickFix" }, -- open when typing command
+		keys = {
+			{ "<leader>Tc", "<cmd>TodoTelescope<cr>", desc = "Open TODOs in Telescope" },
+		},
+	},
+	{ "echasnovski/mini.nvim", version = false },
 }
