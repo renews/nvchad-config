@@ -12,9 +12,9 @@ opt.relativenumber = true
 -- g.coq_settings = { auto_start = "shut-up" }
 
 -- Indenting
--- o.expandtab = true
+o.expandtab = true
 o.shiftwidth = 2
--- o.smartindent = true
+o.smartindent = true
 o.tabstop = 2
 o.softtabstop = 2
 
