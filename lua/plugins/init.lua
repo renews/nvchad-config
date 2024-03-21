@@ -1,7 +1,7 @@
 return {
 	{ "github/copilot.vim" },
 	{ "dmmulroy/ts-error-translator.nvim" },
-	{ "letieu/hacker.nvim" },
+	-- { "letieu/hacker.nvim" },
 	{ "folke/flash.nvim", opts = {} },
 	{ "nvim-pack/nvim-spectre", opts = {} },
 	{ "akinsho/git-conflict.nvim", version = "*", config = true },
@@ -14,7 +14,6 @@ return {
 		"folke/zen-mode.nvim",
 		opts = {},
 	},
-	{ "ggandor/leap.nvim", opts = {} },
 	{
 		"zeioth/garbage-day.nvim",
 		dependencies = "neovim/nvim-lspconfig",
@@ -44,21 +43,21 @@ return {
 	-- 	},
 	-- },
 	{ "lukas-reineke/headlines.nvim", dependencies = "nvim-treesitter/nvim-treesitter", opts = {} },
-	{
-		"ms-jpq/coq_nvim",
-		branch = "coq",
-		build = ":COQdeps",
-		-- config = function()
-		-- 	require("coq").setup({})
-		-- end,
-	},
-	{ "ms-jpq/coq.artifacts", branch = "artifacts" },
+	-- {
+	-- 	"ms-jpq/coq_nvim",
+	-- 	branch = "coq",
+	-- 	build = ":COQdeps",
+	-- },
+	-- { "ms-jpq/coq.artifacts", branch = "artifacts" },
 	{ "folke/trouble.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {} },
 	{
 		"rmagatti/auto-session",
-		config = function()
-			require("configs.autosession")
-		end,
+		opts = {
+			auto_restore_enabled = true,
+			log_level = "error",
+			auto_session_enable_last_session = true,
+			auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+		},
 	},
 	{ "folke/neodev.nvim", opts = {} },
 	{
@@ -203,7 +202,7 @@ return {
 		event = "VeryLazy",
 		cmd = { "TodoQuickFix" }, -- open when typing command
 		keys = {
-			{ "<leader>Tc", "<cmd>TodoTelescope<cr>", desc = "Open TODOs in Telescope" },
+			{ "<leader>TT", "<cmd>TodoTelescope<cr>", desc = "Open TODOs in Telescope" },
 		},
 	},
 	{ "echasnovski/mini.nvim", version = false },

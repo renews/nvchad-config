@@ -6,6 +6,9 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 map("n", "<leader>x", "")
 map("n", "<leader>b", "")
 
+-- default commands
+map("i", "<C-s>", "<ESC>:w<CR>", { desc = "Save file" })
+
 -- buffer navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Navigate to the left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Navigate to the bottom window" })
@@ -22,9 +25,15 @@ map("n", "<leader>fm", function()
 end, { desc = "File Format with conform" })
 
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
-
 -- copilot completions
-map("i", "<C-l>", "<Plug>(copilot-accept-line)", { desc = "Copilot: Accept line" })
+vim.g.copilot_no_tab_map = true
+
+map(
+	"i",
+	"<C-l>",
+	'copilot#Accept("\\<CR>")',
+	{ expr = true, replace_keycodes = false, silent = true, desc = "Copilot: Accept suggestion" }
+)
 map("i", "<A-Right>", "<Plug>(copilot-accept-word)", { desc = "Copilot: Accept word" })
 map("i", "<A-]>", "<Plug>(copilot-next)", { desc = "Copilot: Next" })
 map("i", "<A-[>", "<Plug>(copilot-previous)", { desc = "Copilot: Previous" })

@@ -1,6 +1,6 @@
 -- https://github.com/neovim/nvim-lspconfig
 local configs = require("nvchad.configs.lspconfig")
-local coq = require("coq")
+-- local coq = require("coq")
 
 local servers = {
 	html = {},
@@ -39,9 +39,8 @@ local servers = {
 for name, opts in pairs(servers) do
 	opts.on_init = configs.on_init
 	opts.on_attach = configs.on_attach
-	-- opts.capabilities = configs.capabilities
-	opts.capabilities = coq.lsp_ensure_capabilities(configs.capabilities)
+	opts.capabilities = configs.capabilities
+	-- opts.capabilities = coq.lsp_ensure_capabilities(configs.capabilities)
 
 	require("lspconfig")[name].setup(opts)
-	-- require("lspconfig")[name].setup(coq.lsp_ensure_capabilities(opts))
 end
