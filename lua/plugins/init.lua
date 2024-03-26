@@ -1,55 +1,77 @@
 return {
-	{ "github/copilot.vim" },
-	{ "dmmulroy/ts-error-translator.nvim" },
-	-- { "letieu/hacker.nvim" },
-	{ "folke/flash.nvim", opts = {} },
-	{ "nvim-pack/nvim-spectre", opts = {} },
-	{ "akinsho/git-conflict.nvim", version = "*", config = true },
 	{
-		"stevearc/oil.nvim",
-		opts = {},
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+		"github/copilot.vim",
+		keys = {
+			{
+				"<C-l>",
+				'copilot#Accept("\\<CR>")',
+				expr = true,
+				replace_keycodes = false,
+				silent = true,
+				mode = "i",
+				desc = "Copilot: Accept suggestion",
+			},
+			{ "<A-Right>", "<Plug>(copilot-accept-word)", mode = "i", desc = "Copilot: Accept word" },
+			{ "<A-]>", "<Plug>(copilot-next)", mode = "i", desc = "Copilot: Next" },
+			{ "<A-[>", "<Plug>(copilot-previous)", mode = "i", desc = "Copilot: Previous" },
+			{ "<A-Bslash>", "<Plug>(copilot-suggest)", mode = "i", desc = "Copilot: Suggest" },
+		},
 	},
+	"nvim-lua/plenary.nvim", -- dependency for many plugins
 	{
-		"folke/zen-mode.nvim",
-		opts = {},
+		"mbbill/undotree",
+		keys = {
+			{ "<leader>u", ":UndotreeToggle<CR>", desc = "Toggle undotree" },
+		},
 	},
+	"dmmulroy/ts-error-translator.nvim",
+	"letieu/hacker.nvim",
 	{
-		"zeioth/garbage-day.nvim",
-		dependencies = "neovim/nvim-lspconfig",
+		"folke/flash.nvim",
 		event = "VeryLazy",
+		---@type Flash.Config
 		opts = {},
+  -- stylua: ignore
+  keys = {
+    { "q", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "Q", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-S>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
 	},
+	"nvim-pack/nvim-spectre",
+	"folke/zen-mode.nvim",
+	"folke/neodev.nvim",
+	{ "akinsho/git-conflict.nvim", version = "*", config = true },
 	{
 		"karb94/neoscroll.nvim",
 		config = function()
 			require("neoscroll").setup({})
 		end,
 	},
-	{
-		"pwntester/octo.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-			"nvim-tree/nvim-web-devicons",
-		},
-		opts = {},
-	},
-	-- {
-	-- 	"m4xshen/hardtime.nvim",
-	-- 	dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-	-- 	opts = {
-	-- 		disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil" },
-	-- 	},
-	-- },
 	{ "lukas-reineke/headlines.nvim", dependencies = "nvim-treesitter/nvim-treesitter", opts = {} },
-	-- {
-	-- 	"ms-jpq/coq_nvim",
-	-- 	branch = "coq",
-	-- 	build = ":COQdeps",
-	-- },
-	-- { "ms-jpq/coq.artifacts", branch = "artifacts" },
-	{ "folke/trouble.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {} },
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+		keys = {
+			{ "<leader>tt", "<cmd>TroubleToggle<cr>", desc = "Trouble: Toggle" },
+			{
+				"<leader>tw",
+				"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>",
+				desc = "Trouble: Workspace diagnostics",
+			},
+			{
+				"<leader>td",
+				"<cmd>TroubleToggle lsp_document_diagnostics<cr>",
+				desc = "Trouble: Document diagnostics",
+			},
+			{ "<leader>tq", "<cmd>TroubleToggle quickfix<cr>", desc = "Trouble: Quickfix" },
+			{ "<leader>tl", "<cmd>TroubleToggle loclist<cr>", desc = "Trouble: Loclist" },
+			{ "gR", "<cmd>TroubleToggle lsp_references<cr>", desc = "Trouble: LSP references" },
+		},
+	},
 	{
 		"rmagatti/auto-session",
 		opts = {
@@ -59,7 +81,6 @@ return {
 			auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 		},
 	},
-	{ "folke/neodev.nvim", opts = {} },
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
@@ -69,9 +90,11 @@ return {
 			"LazyGitFilter",
 			"LazyGitFilterCurrentFile",
 		},
-		-- optional for floating window border decoration
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+		},
+		keys = {
+			{ "<leader>lg", ":LazyGit<CR>", desc = "LazyGit" },
 		},
 	},
 	{
@@ -82,7 +105,6 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 		},
 	},
-
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
 		branch = "canary",
@@ -91,46 +113,23 @@ return {
 			{ "nvim-lua/plenary.nvim" },
 		},
 		opts = {},
-	},
-	{
-		-- https://github.com/stevearc/conform.nvim
-		"stevearc/conform.nvim",
-		config = function()
-			require("configs.conform")
-		end,
-	},
-	{
-		"nvim-tree/nvim-tree.lua",
-		opts = {
-			git = { enable = true },
-		},
-	},
-	{
-		"williamboman/mason.nvim",
-		opts = {
-			ensure_installed = {
-				"lua-language-server",
-				"html-lsp",
-				"prettier",
-				"stylua",
-				"elixir-ls",
-				"erlang-ls",
-				"erlang-debugger",
-				"standardrb",
-				"gopls",
-				"htmx-lsp",
-				"nginx-language-server",
-				"terraform-ls",
-				"tailwindcss-language-server",
-				"solargraph",
-				"rust-analyzer",
-				"pyright",
-				"marksman",
-				"nginx-language-server",
+		keys = {
+			{
+				"<leader>cc",
+				":CopilotChatToggle<CR>",
+				desc = "Copilot: Toggle Chat",
+				{ noremap = true, silent = true },
 			},
+			{ "<leader>cr", ":CopilotChatReset<CR>", desc = "Copilot: Reset Chat" },
+			{ "<leader>ce", ":CopilotChatExplain<CR>", desc = "Copilot: Explain" },
+			{ "<leader>ct", ":CopilotChatTests<CR>", desc = "Copilot: Generate test" },
+			{ "<leader>cd", ":CopilotChatDocs<CR>", desc = "Copilot: Write docs" },
+			{ "<leader>co", ":CopilotChatCommitStaged<CR>", desc = "Copilot: Commit message for staged files" },
 		},
 	},
-	-- In order to modify the `lspconfig` configuration:
+	{ "stevearc/conform.nvim", opts = { require("configs.conform") } },
+	{ "nvim-tree/nvim-tree.lua", opts = { git = { enable = true } } },
+	{ "williamboman/mason.nvim", opts = { require("configs.mason") } },
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
@@ -150,12 +149,15 @@ return {
 				"lua",
 				"vimdoc",
 				"gitignore",
-
+				"bash",
+				"regex",
+				"markdown_inline",
 				-- web dev
 				"html",
 				"css",
 				"javascript",
 				"typescript",
+				"jsdoc",
 				"tsx",
 				"json",
 				"scss",
@@ -205,5 +207,67 @@ return {
 			{ "<leader>TT", "<cmd>TodoTelescope<cr>", desc = "Open TODOs in Telescope" },
 		},
 	},
-	{ "echasnovski/mini.nvim", version = false },
+	-- {
+	-- 	"folke/noice.nvim",
+	-- 	event = "VeryLazy",
+	-- 	opts = {
+	-- 		lsp = {
+	-- 			hover = {
+	-- 				enabled = false,
+	-- 			},
+	-- 			signature = {
+	-- 				enabled = false,
+	-- 			},
+	-- 			override = {
+	-- 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+	-- 				["vim.lsp.util.stylize_markdown"] = true,
+	-- 				-- ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+	-- 			},
+	-- 		},
+	-- 		presets = {
+	-- 			bottom_search = true, -- use a classic bottom cmdline for search
+	-- 			-- command_palette = true, -- position the cmdline and popupmenu together
+	-- 			long_message_to_split = true, -- long messages will be sent to a split
+	-- 			inc_rename = false, -- enables an input dialog for inc-rename.nvim
+	-- 			lsp_doc_border = false, -- add a border to hover docs and signature help
+	-- 		},
+	-- 	},
+	-- 	dependencies = {
+	-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		-- OPTIONAL:
+	-- 		--   `nvim-notify` is only needed, if you want to use the notification view.
+	-- 		--   If not available, we use `mini` as the fallback
+	-- 		"rcarriga/nvim-notify",
+	-- 	},
+	-- },
+	{
+		"ray-x/go.nvim",
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("go").setup()
+
+		end,
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+	},
+	{
+		"mrjones2014/legendary.nvim",
+		priority = 10000,
+		lazy = false,
+	},
+	-- { "echasnovski/mini.ai", version = false, opts = {} },
+	-- { "echasnovski/mini.align", version = false, opts = {} },
+	-- { "echasnovski/mini.bracketed", version = false, opts = {} },
+	-- { "echasnovski/mini.cursorword", version = false, opts = {} },
+	{ "echasnovski/mini.jump2d", version = false, opts = {} },
+	-- { "echasnovski/mini.splitjoin", version = false, opts = {} },
+	-- { "echasnovski/mini.starter", version = false, opts = {} },
+	-- { "echasnovski/mini.surround", version = false, opts = {} },
+	-- { "echasnovski/mini.trailspace", version = false, opts = {} },
 }

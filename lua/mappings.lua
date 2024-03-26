@@ -5,9 +5,11 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("n", "<leader>x", "")
 map("n", "<leader>b", "")
+map("n", "s", "")
 
 -- default commands
 map("i", "<C-s>", "<ESC>:w<CR>", { desc = "Save file" })
+map("n", "<C-s>", ":w<CR>", { desc = "Save File" })
 
 -- buffer navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Navigate to the left window" })
@@ -20,55 +22,13 @@ map("n", "<C-q>", ":bd<CR>", { silent = true, noremap = true, desc = "Close buff
 map("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
-map("n", "<leader>fm", function()
+map("n", "<leader><leader>", function()
 	require("conform").format()
 end, { desc = "File Format with conform" })
 
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
--- copilot completions
+
 vim.g.copilot_no_tab_map = true
-
-map(
-	"i",
-	"<C-l>",
-	'copilot#Accept("\\<CR>")',
-	{ expr = true, replace_keycodes = false, silent = true, desc = "Copilot: Accept suggestion" }
-)
-map("i", "<A-Right>", "<Plug>(copilot-accept-word)", { desc = "Copilot: Accept word" })
-map("i", "<A-]>", "<Plug>(copilot-next)", { desc = "Copilot: Next" })
-map("i", "<A-[>", "<Plug>(copilot-previous)", { desc = "Copilot: Previous" })
-map("i", "<A-Bslash>", "<Plug>(copilot-suggest)", { desc = "Copilot: Suggest" })
-
--- copilot chat
-map("n", "<leader>cc", ":CopilotChatToggle<CR>", { desc = "Copilot: Toggle Chat" })
-map("n", "<leader>cr", ":CopilotChatReset<CR>", { desc = "Copilot: Reset Chat" })
-map("n", "<leader>ce", ":CopilotChatExplain<CR>", { desc = "Copilot: Explain" })
-map("n", "<leader>ct", ":CopilotChatTests<CR>", { desc = "Copilot: Generate test" })
-map("n", "<leader>cd", ":CopilotChatDocs<CR>", { desc = "Copilot: Write docs" })
-map("n", "<leader>co", ":CopilotChatCommitStaged<CR>", { desc = "Copilot: Commit message for staged files" })
-
-map("n", "<leader>lg", ":LazyGit<CR>", { desc = "LazyGit" })
-
--- trouble (LSP diagnostics)
-map("n", "<leader>xx", function()
-	require("trouble").toggle()
-end, { desc = "Trouble: Toggle" })
-map("n", "<leader>xw", function()
-	require("trouble").toggle("workspace_diagnostics")
-end, { desc = "Trouble: Workspace diagnostics" })
-map("n", "<leader>xd", function()
-	require("trouble").toggle("document_diagnostics")
-end, { desc = "Trouble: Document diagnostics" })
-map("n", "<leader>xq", function()
-	require("trouble").toggle("quickfix")
-end, { desc = "Trouble: Quickfix" })
-map("n", "<leader>xl", function()
-	require("trouble").toggle("loclist")
-end, { desc = "Trouble: Loclist" })
-map("n", "gR", function()
-	require("trouble").toggle("lsp_references")
-end, { desc = "Trouble: LSP references" })
-
 -- vim-test
 map("n", "<leader>Tn", ":TestNearest<CR>", { desc = "Test the nearest function." })
 map("n", "<leader>Tf", ":TestFile<CR>", { desc = "Test current file." })
@@ -77,7 +37,7 @@ map("n", "<leader>Tl", ":TestLast<CR>", { desc = "Test the last test." })
 map("n", "<leader>Tg", ":TestVisit<CR>", { desc = "Open the test file from the last test." })
 
 -- Spectre (search and replace)
-map("n", "<leader>s", ":lua require('spectre').open()<CR>", { desc = "Search and replace - Toggle" })
+map("n", "<leader>so", ":lua require('spectre').open()<CR>", { desc = "Search and replace - Toggle" })
 map("n", "<leader>sw", ":lua require('spectre').open_visual({select_word=true})<CR>", { desc = "Search current word" })
 map("v", "<leader>sw", "<ESC>:lua require('spectre').open_visual()<CR>", { desc = "Search current word" })
 map(
@@ -86,3 +46,33 @@ map(
 	":lua require('spectre').open_file_search({select_word=true})<CR>",
 	{ desc = "Search on current file" }
 )
+
+-- map("n", "<leader><leader>", ":so<CR>", { desc = "Source the current file" })
+map("n", "<leader>sc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and replace" })
+map("n", "<leader>xe", "<cmd>!chmod +x %<CR>", { silent = true }, { desc = "Set file as executable" })
+
+map("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true }, { desc = "Move line up" })
+map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true }, { desc = "Move line down" })
+
+map("n", "J", "mzJ`z", { noremap = true, silent = true }, { desc = "Join lines" })
+map("n", "n", "nzzzv", { noremap = true, silent = true }, { desc = "Move to next search item" })
+map("n", "N", "Nzzzv", { noremap = true, silent = true }, { desc = "Move to previous search item" })
+
+map("n", "<leader>vwm", function()
+	require("vim-with-me").StartVimWithMe()
+end, { desc = "Start Vim with me" })
+map("n", "<leader>svwm", function()
+	require("vim-with-me").StopVimWithMe()
+end, { desc = "Stop Vim with me" })
+
+map("x", "<leader>p", [["_dP]], { desc = "Paste over selection" })
+
+-- next greatest remap ever : asbjornHaland
+map({ "n", "v" }, "<leader>y", [["+y]], { desc = "Copy to clipboard" })
+map("n", "<leader>Y", [["+Y]], { desc = "Copy to clipboard" })
+map({ "n", "v" }, "<leader>d", [["_d]], { desc = "Cut to clipboard" })
+
+map("n", "<C-k>", "<cmd>cnext<CR>zz", { desc = "Next quickfix item" })
+map("n", "<C-j>", "<cmd>cprev<CR>zz", { desc = "Previous quickfix item" })
+map("n", "<leader>k", "<cmd>lnext<CR>zz", { desc = "Next location list item" })
+map("n", "<leader>j", "<cmd>lprev<CR>zz", { desc = "Previous location list item" })

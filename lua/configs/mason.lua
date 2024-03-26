@@ -1,0 +1,22 @@
+return {
+	ensure_installed = {
+		"lua-language-server",
+		"html-lsp",
+		"prettier",
+		"stylua",
+		"elixir-ls",
+		"erlang-ls",
+		"erlang-debugger",
+		"standardrb",
+		"gopls",
+		"htmx-lsp",
+		"nginx-language-server",
+		"terraform-ls",
+		"tailwindcss-language-server",
+		"solargraph",
+		"rust-analyzer",
+		"pyright",
+		"marksman",
+		"nginx-language-server",
+	},
+}
